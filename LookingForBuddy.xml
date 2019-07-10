@@ -1,7 +1,7 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/..\FrameXML\UI.xsd">
     <Script file="LookingForBuddy.lua" />
 
-    <Frame name="LFB" parent="UIParent" inherits="PortraitFrameTemplate" hidden="true">
+    <Frame name="LFB" parent="UIParent" inherits="BasicFrameTemplate" hidden="true">
         <Size><RelDimension x=".5" y=".35" /></Size>
         <Anchors>
             <Anchor point="CENTER"/>
@@ -19,6 +19,14 @@
                         </Texture>
                     </Layer>
                 </Layers>
+
+                <Frames>
+                    <Button name="LFBAddPost" parent="LFBSummaryScroll" inherits="UIPanelButtonTemplate" parentKey="AddPostButton">
+                        <Anchors><Anchor point="TOPRIGHT" /></Anchors>
+                        <Size> <RelDimension relativeTo="LFB" x="0.15" y=".015" /> </Size>
+                        <Scripts> <OnClick function="LFB_AddPost"/> </Scripts>
+                    </Button>
+                </Frames>
             </ScrollFrame>
 
             <Frame name="LFBFullPost" parent="LFB">
