@@ -5,29 +5,31 @@ function LFB_PopulatePosts(self)
 end
 
 function CreatePostFrame(self, playerName)
-    local newFrame = CreateFrame("Frame", playerName, LFBSummaryScroll, "SecureDialogBorderTemplate")
+    local newFrame = CreateFrame("Frame", playerName, LFBSummaryScroll)
+    newFrame:SetBackdrop({bgFile = "Interface/Tooltips/UI-Tooltip-Background", 
+         edgeFile = "Interface/Tooltips/UI-Tooltip-Border",
+         tile=true, tileSize=16, edgeSize=16,
+         insets={left=4,right=4,top=4,bottom=4}});
+    newFrame:SetBackdropColor(0,0,0,1);
+    newFrame:SetHeight(100)
+
     local relativeFrame
+
     if #CurrentPostFrames > 0 then
-        print(CurrentPostFrames[1]:GetName(), CurrentPostFrames[#CurrentPostFrames]:GetName())
-        relativeFrame = CurrentPostFrames[#CurrentPostFrames]
-        
-        print("Relative")
+        relativeFrame = CurrentPostFrames[#CurrentPostFrames]        
     else
-        relativeFrame = newFrame:GetParent()
-        print("Parent")
+        relativeFrame = LFBSummaryScroll.AddPostButton
     end
 
     if relativeFrame == newFrame:GetParent() then
-        newFrame:SetPoint("TOPLEFT", relativeFrame)
+        newFrame:SetPoint("TOPLEFT", relativeFrame, "TOPLEFT")
+        newFrame:SetPoint("TOPRIGHT", relativeFrame, "TOPRIGHT")
     else
-        newFrame:SetPoint("BOTTOMLEFT", relativeFrame)
+        newFrame:SetPoint("TOPLEFT", relativeFrame, "BOTTOMLEFT")
+        newFrame:SetPoint("TOPRIGHT", relativeFrame, "BOTTOMRIGHT")
     end
-
-    newFrame:SetHeight(.1)
-    newFrame:SetWidth(1)
     
-    print(newFrame:GetHeight(), newFrame:GetWidth())
-    CurrentPostFrames[#CurrentPostFrames] = newFrame
+    table.insert(CurrentPostFrames, newFrame)
     return newFrame
 end
 
