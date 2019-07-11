@@ -32,7 +32,7 @@ function CreatePostFrame(self, playerName)
 end
 
 function LFB_AddPost(self)
-    C_ChatInfo.SendAddonMessage("LFB_POSTING", "POST ADDED BY OBJECTIVEC", "WHISPER", "Objectivec-Area52")
+    C_ChatInfo.SendAddonMessage("LFB_POSTING", "POST ADDED BY OBJECTIVEC", "GENERAL", "Objectivec-Area52")
     local newPost = CreatePostFrame(UnitName("player"))
 end
 
@@ -53,6 +53,7 @@ function LFB_SlashCommand(msg)
 end
 
 function LFB_OnEvent(self, event, ...)
+    -- What happens when the add on initially loads in
     if event == "ADDON_LOADED" and ... == "LookingForBuddy" then
         -- Stop listening for event since we now know our add on loaded
         self:UnregisterEvent("ADDON_LOADED")
