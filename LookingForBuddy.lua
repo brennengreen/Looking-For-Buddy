@@ -1,5 +1,12 @@
 local CurrentPostFrames = {}
 
+function LFBSummaryScroll_Update()
+    FauxScrollFrame_Update(LFBSummaryScroll,50,5,100);
+    print("Were at"..FauxScrollFrame_GetOffset(LFBSummaryScroll))
+    if #CurrentPostFrames > 0 then
+    end
+end
+
 function LFB_PopulatePosts(self)
     print("Populating posts you bastard...")
 end
@@ -11,7 +18,7 @@ function CreatePostFrame(self, playerName)
          tile=true, tileSize=16, edgeSize=16,
          insets={left=4,right=4,top=4,bottom=4}});
     newFrame:SetBackdropColor(0,0,0,1);
-    newFrame:SetHeight(100)
+    newFrame:SetHeight(127.5)
 
     local relativeFrame
 
@@ -36,6 +43,9 @@ end
 function LFB_AddPost(self)
     C_ChatInfo.SendAddonMessage("LFB_POSTING", "POST ADDED BY OBJECTIVEC", "GENERAL", "Objectivec-Area52")
     local newPost = CreatePostFrame(UnitName("player"))
+    if #CurrentPostFrames > 4 then
+        newPost:Hide()
+    end
 end
 
 function LFB_OnLoad(self)

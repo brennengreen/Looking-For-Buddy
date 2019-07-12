@@ -10,7 +10,9 @@
         <Frames>
             <ScrollFrame name="LFBSummaryScroll" parent="LFB" inherits="FauxScrollFrameTemplateLight">
                 <Size><RelDimension relativeTo="LFB" x="0.15" y=".335" /></Size>
-                <Anchors><Anchor point="BOTTOMLEFT" relativeTo="LFB"/></Anchors>
+                <Anchors>
+                    <Anchor point="BOTTOMLEFT" relativeTo="LFB"/>
+                </Anchors>
 
                 <Layers>
                     <Layer level="BACKGROUND">
@@ -27,11 +29,20 @@
                         <Scripts> <OnClick function="LFB_AddPost"/> </Scripts>
                     </Button>
                 </Frames>
+
+                <Scripts>
+                    <OnVerticalScroll>
+                        FauxScrollFrame_OnVerticalScroll(self, offset, 16, LFBSummaryScroll_Update); 
+                    </OnVerticalScroll>
+                    <OnShow>
+                        LFBSummaryScroll_Update()
+                    </OnShow>
+                </Scripts>
             </ScrollFrame>
 
             <Frame name="LFBFullPost" parent="LFB">
                 <Size><RelDimension relativeTo="LFB" x="0.335" y=".335" /></Size>
-                <Anchors><Anchor point="BOTTOMRIGHT" relativeTo="LFB"/></Anchors>
+                <Anchors><Anchor point="BOTTOMRIGHT" relativeTo="LFB" relativePoint="BOTTOMRIGHT" /></Anchors>
 
                 <Layers>
                     <Layer level="BACKGROUND">
