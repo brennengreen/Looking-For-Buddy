@@ -8,50 +8,11 @@
         </Anchors>
 
         <Frames>
-            <ScrollFrame name="LFBSummaryScroll" parent="LFB" inherits="FauxScrollFrameTemplateLight">
-                <Size><RelDimension relativeTo="LFB" x="0.15" y=".335" /></Size>
-                <Anchors>
-                    <Anchor point="BOTTOMLEFT" relativeTo="LFB"/>
-                </Anchors>
-
-                <Layers>
-                    <Layer level="BACKGROUND">
-                        <Texture>
-                            <Color r="0" g="0" b="0" a="0.25"/>
-                        </Texture>
-                    </Layer>
-                </Layers>
-
-                <Frames>
-                    <Button name="LFBAddPost" parent="LFBSummaryScroll" inherits="UIPanelButtonTemplate" parentKey="AddPostButton">
-                        <Anchors><Anchor point="TOPRIGHT" /></Anchors>
+            <Button name="LFBAddPost" parent="LFB" inherits="UIPanelButtonTemplate" parentKey="AddPostButton">
+                        <Anchors><Anchor relativeTo="LFB" relativePoint="TOPLEFT" /></Anchors>
                         <Size> <RelDimension relativeTo="LFB" x="0.15" y=".015" /> </Size>
                         <Scripts> <OnClick function="LFB_AddPost"/> </Scripts>
-                    </Button>
-                </Frames>
-
-                <Scripts>
-                    <OnVerticalScroll>
-                        FauxScrollFrame_OnVerticalScroll(self, offset, 16, LFBSummaryScroll_Update); 
-                    </OnVerticalScroll>
-                    <OnShow>
-                        LFBSummaryScroll_Update()
-                    </OnShow>
-                </Scripts>
-            </ScrollFrame>
-
-            <Frame name="LFBFullPost" parent="LFB">
-                <Size><RelDimension relativeTo="LFB" x="0.335" y=".335" /></Size>
-                <Anchors><Anchor point="BOTTOMRIGHT" relativeTo="LFB" relativePoint="BOTTOMRIGHT" /></Anchors>
-
-                <Layers>
-                    <Layer level="BACKGROUND">
-                        <Texture>
-                            <Color r="0" g="0" b="0" a="0.6"/>
-                        </Texture>
-                    </Layer>
-                </Layers>
-            </Frame>
+            </Button>
         </Frames>
 
         <Scripts>

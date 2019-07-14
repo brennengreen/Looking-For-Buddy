@@ -1,46 +1,33 @@
 local CurrentPostFrames = {}
-local lastOffset = 0
-local currentTopScrollIndex = 1
-
-function LFBSummaryScroll_Update(self)
-    FauxScrollFrame_Update(LFBSummaryScroll,50,4,50);
-    if FauxScrollFrame_GetOffset(LFBSummaryScroll) > lastOffset and FauxScrollFrame_GetOffset(LFBSummaryScroll) % 4 == 0 then
-        CurrentPostFrames[currentTopScrollIndex]:Hide()
-        currentTopScrollIndex = currentTopScrollIndex + 1
-        CurrentPostFrames[currentTopScrollIndex]:Show()
-        lastOffset = FauxScrollFrame_GetOffset(LFBSummaryScroll)
-    elseif FauxScrollFrame_GetOffset(LFBSummaryScroll) < lastOffset and FauxScrollFrame_GetOffset(LFBSummaryScroll) % 4 == 0 then
-        CurrentPostFrames[currentTopScrollIndex]:Hide()
-        currentTopScrollIndex = currentTopScrollIndex - 1
-        CurrentPostFrames[currentTopScrollIndex]:Show()
-        lastOffset = FauxScrollFrame_GetOffset(LFBSummaryScroll)
-    end
-end
 
 function LFB_PopulatePosts(self)
     print("Populating posts you bastard...")
 end
 
 function CreatePostFrame(self, playerName)
-    local newFrame = CreateFrame("Frame", playerName, LFBSummaryScroll)
+    local newFrame = CreateFrame("Frame", playerName, scrollCanvas)
     newFrame:SetBackdrop({bgFile = "Interface/Tooltips/UI-Tooltip-Background", 
          edgeFile = "Interface/Tooltips/UI-Tooltip-Border",
          tile=true, tileSize=16, edgeSize=16,
          insets={left=4,right=4,top=4,bottom=4}});
     newFrame:SetBackdropColor(0,0,0,1);
-    newFrame:SetHeight(127.5)
+    newFrame:SetHeight(50)
+
+    local text = newFrame:CreateFontString(nil, "ARTWORK", "GameFontNormal")
+    text:SetPoint("TOPLEFT", newFrame, "TOPLEFT")
+    text:SetText("Frame"..#CurrentPostFrames)
 
     local relativeFrame
 
-    if #CurrentPostFrames > 0 th en
+    if #CurrentPostFrames > 0 then
         relativeFrame = CurrentPostFrames[#CurrentPostFrames]        
     else
-        relativeFrame = LFBSummaryScroll.AddPostButton
+        relativeFrame = LFB
     end
 
-    if relativeFrame == newFrame:GetParent() then
-        newFrame:SetPoint("TOPLEFT", relativeFrame, "TOPLEFT")
-        newFrame:SetPoint("TOPRIGHT", relativeFrame, "TOPRIGHT")
+    if relativeFrame == LFB then
+        newFrame:SetPoint("TOPLEFT", relativeFrame, "TOPLEFT",0,-20)
+        newFrame:SetPoint("TOPRIGHT", relativeFrame, "TOPRIGHT",-22,-20)
     else
         newFrame:SetPoint("TOPLEFT", relativeFrame, "BOTTOMLEFT")
         newFrame:SetPoint("TOPRIGHT", relativeFrame, "BOTTOMRIGHT")
@@ -51,9 +38,10 @@ function CreatePostFrame(self, playerName)
 end
 
 function LFB_AddPost(self)
-    C_ChatInfo.SendAddonMessage("LFB_POSTING", "POST ADDED BY OBJECTIVEC", "GENERAL", "Objectivec-Area52")
+    C_ChatInfo.SendAddonMessage("LFB_POSTING", "POST ADDED BY OBJECTIVEC",
+    "GENERAL", "Objectivec-Area52")
     local newPost = CreatePostFrame(UnitName("player"))
-    if #CurrentPostFrames > 4 then
+    if #CurrentPostFrames > 28 then
         newPost:Hide()
     end
 end
@@ -89,9 +77,17 @@ function LFB_OnEvent(self, event, ...)
 
         -- Set important ui configurations
         LFB.TitleText:SetText("Looking For Buddy")
-        LFBSummaryScroll.AddPostButton:SetText("Add Post")
+        LFB.AddPostButton:SetText("Add Post")
         LFB_PopulatePosts()
+        
 
+        -- Creating scroll frame
+        local scroll = CreateFrame("ScrollFrame", "LFBScroll", LFB, "UIPanelScrollFrameTemplate")
+        scroll:SetPoint("TOPLEFT", LFB, "TOPLEFT", 0, -22)
+        scroll:SetPoint("BOTTOMRIGHT", LFB, "BOTTOMRIGHT", -26, 2)
+
+        scrollFrame = CreateFrame("Frame", "scrollCanvas", scroll)
+        scroll:SetScrollChild(scrollFrame)
         -- Let the user know the add on is ready for use!
         print("Looking for Buddy loaded! Type /lfb to use the add-on.")
     end
