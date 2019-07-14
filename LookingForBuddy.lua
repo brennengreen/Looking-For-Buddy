@@ -1,9 +1,19 @@
 local CurrentPostFrames = {}
+local lastOffset = 0
+local currentTopScrollIndex = 1
 
-function LFBSummaryScroll_Update()
-    FauxScrollFrame_Update(LFBSummaryScroll,50,5,100);
-    print("Were at"..FauxScrollFrame_GetOffset(LFBSummaryScroll))
-    if #CurrentPostFrames > 0 then
+function LFBSummaryScroll_Update(self)
+    FauxScrollFrame_Update(LFBSummaryScroll,50,4,50);
+    if FauxScrollFrame_GetOffset(LFBSummaryScroll) > lastOffset then
+        print("Scrolling Down")
+        --CurrentPostFrames[currentTopScrollIndex]:Hide()
+        currentTopScrollIndex = currentTopScrollIndex + 1
+        lastOffset = FauxScrollFrame_GetOffset(LFBSummaryScroll)
+    else
+        print("Scrolling Up")
+        currentTopScrollIndex = currentTopScrollIndex - 1
+        --CurrentPostFrames[currentTopScrollIndex]:Show()
+        lastOffset = FauxScrollFrame_GetOffset(LFBSummaryScroll)
     end
 end
 
