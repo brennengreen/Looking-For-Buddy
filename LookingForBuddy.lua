@@ -4,15 +4,15 @@ local currentTopScrollIndex = 1
 
 function LFBSummaryScroll_Update(self)
     FauxScrollFrame_Update(LFBSummaryScroll,50,4,50);
-    if FauxScrollFrame_GetOffset(LFBSummaryScroll) > lastOffset then
-        print("Scrolling Down")
-        --CurrentPostFrames[currentTopScrollIndex]:Hide()
+    if FauxScrollFrame_GetOffset(LFBSummaryScroll) > lastOffset and FauxScrollFrame_GetOffset(LFBSummaryScroll) % 4 == 0 then
+        CurrentPostFrames[currentTopScrollIndex]:Hide()
         currentTopScrollIndex = currentTopScrollIndex + 1
+        CurrentPostFrames[currentTopScrollIndex]:Show()
         lastOffset = FauxScrollFrame_GetOffset(LFBSummaryScroll)
-    else
-        print("Scrolling Up")
+    elseif FauxScrollFrame_GetOffset(LFBSummaryScroll) < lastOffset and FauxScrollFrame_GetOffset(LFBSummaryScroll) % 4 == 0 then
+        CurrentPostFrames[currentTopScrollIndex]:Hide()
         currentTopScrollIndex = currentTopScrollIndex - 1
-        --CurrentPostFrames[currentTopScrollIndex]:Show()
+        CurrentPostFrames[currentTopScrollIndex]:Show()
         lastOffset = FauxScrollFrame_GetOffset(LFBSummaryScroll)
     end
 end
@@ -32,7 +32,7 @@ function CreatePostFrame(self, playerName)
 
     local relativeFrame
 
-    if #CurrentPostFrames > 0 then
+    if #CurrentPostFrames > 0 th en
         relativeFrame = CurrentPostFrames[#CurrentPostFrames]        
     else
         relativeFrame = LFBSummaryScroll.AddPostButton
